@@ -3,96 +3,18 @@ title = Diary test
 date = 2013/01/02
 description = A test entry for the diary
 robots = noindex,nofollow
-excerpt = 8
+excerpt = 10
 --!>
+A simple snippet of code.
+
 ~~~ cpp
-int main(int show)
+int main(void)
 {
 	return 0;
 }
 ~~~
 
-Code in the excerpt.
-
-~~~ php
-private function get_pages($settings, $base_dir, $order_by = 'date', $order = 'desc')
-	{
-		$pages = $this->get_files($base_dir);
-		$sorted_pages = array();
-		$id = 0;
-		
-		foreach($pages as $key => $page)
-		{
-			if(basename($page) == '404.md')
-			{
-				unset($pages[$key]);
-				continue;
-			}
-			//COMMENT
-			$page_raw = file_get_contents($page);
-			list($page_meta, $page_content) = $this->parse_content($settings, $page_raw);
-
-			$url = str_replace(CONTENT_DIR, $settings['base_url'] .'/', $page);
-			$url = str_replace('index.md', '', $url);
-			$url = str_replace('.md', '', $url);
-			
-			$data = array(
-				'title' => $page_meta['title'],
-				'url' => $url,
-				'date' => $page_meta['date'],
-				'date_formatted' => date("Y M jS", strtotime($page_meta['date'])),
-				'content' => $page_content,
-				'excerpt' => $this->limit_words($settings, $url, strip_tags($page_content))
-			);
-			
-			if($order_by == 'date')
-			{
-				$sorted_pages[$page_meta['date'] . $id] = $data;
-				$id++;
-			}
-			else
-			{
-				$sorted_pages[] = $data;
-			}
-		}
-		
-		if($order == 'desc') krsort($sorted_pages);
-		else ksort($sorted_pages);
-		
-		return $sorted_pages;
-	}	
-~~~
-
-<table border="1">
-<tr>
-<td>row 1, cell 1</td>
-<td>row 1, cell 2</td>
-</tr>
-<tr>
-<td>row 2, cell 1</td>
-<td>row 2, cell 2</td>
-</tr>
-</table>
-
-<table border="1">
-<caption>表の題名</caption>
-<td>
-<td>セル</td>
-<td>セル</td>
-</td>
-</table>
-
-<form name="input" action="html_form_action.asp" method="get">
-Username: <input type="text" name="user">
-<input type="submit" value="Submit">
-</form>
-
-<blockquote>
- <p>I contend that we are both atheists. I just believe in one fewer
- god than you do. When you understand why you dismiss all the other
- possible gods, you will understand why I dismiss yours.</p>
-</blockquote>
-<p>— Stephen Roberts</p>
+End of the excerpt.
 
 Quick Markdown Syntax Guide
 ===========================
@@ -268,14 +190,14 @@ Images
 
 To include an image, just put a "!" in front of a text link:
 
-![alternate text](http://someurl/image.gif)
+![alternate text](http://i.imgur.com/BSkDA.gif)
 
 
 The "alternate text" will show up if the browser can't load the image.
 
 You can also use a title if you want, like this:
 
-![tiny arrow](http://greg.vario.us/img/extlink.png "tiny arrow")
+![tiny arrow](https://raw.github.com/dcurtis/markdown-mark/master/png/208x128.png "markdown logo")
 
 
 
