@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}" class="no-js">
+<head>
+    <meta charset="utf-8" />
+    
+    <title>{% if meta.title %}{{ meta.title }} | {% endif %}{{ site_title }}</title>
+    
+    {% if meta.description %}
+    <meta name="description" content="{{ meta.description }}"> 
+    {% endif %}{% if meta.robots %}
+    <meta name="robots" content="{{ meta.robots }}">
+    {% endif %}
+    
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css" >
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Source+Code+Pro' type='text/css'>
+    <link rel="stylesheet" href="{{ layout_url }}style.css" type="text/css" />
+    <link rel="stylesheet" href="{{ layout_url }}prettify.css" type="text/css" />
+    <script src="{{ base_url }}engine/monogatari.js"></script>
+    <script src="{{ layout_url }}scripts/prettify/prettify.js"></script>
+    <script src="{{ layout_url }}scripts/modernizr-2.6.1.min.js"></script>
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>    
+</head>
+<body onload="prettyPrint();">
+    <div id="wrapper">
+        <header id="header">
+            <div class="inner clearfix">
+                <h1><a href="{{ base_url }}">{{ site_title }}</a></h1>
+                <ul class="nav">
+                {% for path, section in sections %}
+                    {% if path == "diary" %}
+                        <li><a href="{{ base_url }}">{{ section.name }}</a></li>
+                    {% else %}
+                        <li><a href="{{ base_url }}{{ path }}">{{ section.name }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                </ul>
+            </div>
+            <div class="inner clearfix">
+                <ul class="nav">
+                {% if lang == "en" %}
+                    <li class="lang_selected">【English】</li>
+                    <li class="lang_unselected"><a onClick="setLanguage('ja');" href="#">日本語</a></li>
+                {% else %}
+                    <li class="lang_unselected"><a onClick="setLanguage('en');" href="#">English</a></li>
+                    <li class="lang_selected">【日本語】</li>
+                {% endif %}
+                </ul>
+            </div>
+        </header>
+        <section id="content">
+            <div class="inner">
+            {% if frontpage %}
+                {{ content }}
+                <div id="posts">
+                    {% for page in sections.diary.pages %}
+                        {% if loop.index0 == 0 %}
+                        <div class="post">
+                            {% if page.title %}<h2>{{ page.title }}</h2>{% endif %}
+                            <p class="meta">{{ page.date_formatted }}</p>
+                            {{ page.content }}
+                        </div>
+                        {% else %}
+                        <div class="post">
+                            <h3><a href="{{ page.url }}">{{ page.title }}</a></h3>
+                            <p class="meta">{{ page.date_formatted }}</p>
+                            <p class="excerpt">{{ page.excerpt }}</p>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="post">
+                    {% if meta.title %}<h2>{{ meta.title }}</h2>{% endif %}
+                    <p class="meta">{{ meta.date_formatted }}</p>
+                    {{ content }}
+                </div>
+            {% endif %}
+            </div>
+        </section>
+        
+        <footer id="footer">
+            <div class="inner">
+            {% if lang == "ja" %}
+                Powered by <a href="https://github.com/kikijiki/Monogatari">物語</a>
+            {% else %}
+                Powered by <a href="https://github.com/kikijiki/Monogatari">monogatari</a>
+            {% endif %}
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
