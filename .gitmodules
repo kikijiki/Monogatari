@@ -1,0 +1,12 @@
+[submodule "lib/php-markdown"]
+	path = lib/php-markdown
+	url = https://github.com/michelf/php-markdown.git
+[submodule "lib/php-smartypants"]
+	path = lib/php-smartypants
+	url = https://github.com/michelf/php-smartypants.git
+[submodule "lib/twig"]
+	path = lib/twig
+	url = https://github.com/fabpot/Twig.git
+[submodule "lib/zf2"]
+	path = lib/zf2
+	url = https://github.com/zendframework/zf2
