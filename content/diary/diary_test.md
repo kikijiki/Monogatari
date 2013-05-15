@@ -3,7 +3,7 @@ title = Diary test
 date = 2013/01/02
 description = A test entry for the diary
 robots = noindex,nofollow
-excerpt = 10
+excerpt = 8
 --!>
 A simple snippet of code.
 

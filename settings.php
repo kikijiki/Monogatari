@@ -2,8 +2,8 @@
 
 $settings['site_title']['en'] = 'MONOGATARI';
 $settings['site_title']['ja'] = '物語';
-$settings['read_all_message']['en'] = '[read all]';
-$settings['read_all_message']['ja'] = '全部を読む';
+$settings['continue_reading']['en'] = '[continue reading]';
+$settings['continue_reading']['ja'] = '【読み続く】';
 $settings['base_url'] = '/';
 $settings['layout'] = 'somatsu';
 $settings['analytics_ua'] = null;
