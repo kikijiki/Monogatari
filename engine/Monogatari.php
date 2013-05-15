@@ -75,6 +75,7 @@ class Monogatari
         $this->setBinding('layout_url', $this->settings['base_url'].basename(LAYOUT_DIR).'/'.$this->settings['layout'].'/');
         $this->setBinding('base_dir', rtrim(ROOT_DIR, '/'));
         $this->setBinding('base_url', $this->settings['base_url']);
+		$this->setBinding('analytics_ua', $this->settings['analytics_ua']);
     }
     
     private function initializeCache()
