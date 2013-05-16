@@ -1,7 +1,7 @@
 MONOGATARI
 ==========
 
-# Markdown-based blog
+###Markdown-based blog
 
 ## Characteristics
 * Extended markdown syntax ([php-markdown], [php-smartypants]).
