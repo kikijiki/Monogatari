@@ -78,6 +78,7 @@ Markdown is rendered in three passes:
 3. (Prettify)[prettify] (client-side)
 
 About the syntax, refer to the respective project documentation.
+Note: you can use html, and can also include markdown inside html tags if you specify the `markdown="1"` attribute.
 
 ### TODO
 * Integrate comments (using external services)
