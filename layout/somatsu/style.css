@@ -194,25 +194,6 @@ sup
     font-size: smaller;
 }
 
-
-
-/* code
-{
-    font-family: Courier, "Courier New", Monaco, Tahoma;
-    background: #eee;
-    color: #333;
-    padding: 0px 2px;
-}
-*/
-/* pre
-{
-    background: #00131A;
-    padding: 20px;
-    margin-bottom: 1em;
-    overflow: auto;
-    border-radius: 5px;
-}  */
-
 blockquote
 {
     font-style: italic;
@@ -270,10 +251,10 @@ blockquote
     margin-left: 20px;
 }
 
-#header .lang_selected {color:white; font-weight:bold;}
-#header .lang_selected li { margin:0; }
-#header .lang_unselected a:hover { color:#fff }
-#header .lang_unselected a
+#header .nav_selected {color:white; font-weight:bold;}
+#header .nav_selected li { margin:0; }
+#header .nav_unselected a:hover { color:#fff }
+#header .nav_unselected a
 {
     margin:0;
     color:#BFEFFF;
@@ -288,7 +269,7 @@ blockquote
 
 #content
 {
-    padding-bottom:120px;
+    padding-bottom:160px;
 }
 
 #content .inner

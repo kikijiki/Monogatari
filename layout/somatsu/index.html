@@ -6,9 +6,11 @@
     <title>{% if meta.title %}{{ meta.title }} | {% endif %}{{ site_title }}</title>
     
     {% if meta.description %}
-    <meta name="description" content="{{ meta.description }}"> 
-    {% endif %}{% if meta.robots %}
-    <meta name="robots" content="{{ meta.robots }}">
+    <meta name="description" content="{{ meta.description }}"/> 
+    {% endif %}
+    
+    {% if meta.robots %}
+    <meta name="robots" content="{{ meta.robots }}"/>
     {% endif %}
     
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css" >
@@ -41,9 +43,17 @@
                 <ul class="nav">
                 {% for path, section in sections %}
                     {% if path == "diary" %}
-                        <li><a href="{{ base_url }}">{{ section.name }}</a></li>
+                        {% if url == "diary" or url == "" %}
+                        <li><a class="nav_selected" href="{{ base_url }}">【{{ section.name }}】</a></li>
+                        {% else %}
+                        <li><a class="nav_unselected" href="{{ base_url }}">{{ section.name }}</a></li>
+                        {% endif %}
                     {% else %}
-                        <li><a href="{{ base_url }}{{ path }}">{{ section.name }}</a></li>
+                        {% if url == path %}
+                        <li><a class="nav_selected" href="{{ base_url }}{{ path }}">【{{ section.name }}】</a></li>
+                        {% else %}
+                        <li><a class="nav_unselected" href="{{ base_url }}{{ path }}">{{ section.name }}</a></li>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 </ul>
@@ -51,11 +61,11 @@
             <div class="inner clearfix">
                 <ul class="nav">
                 {% if lang == "en" %}
-                    <li class="lang_selected">【English】</li>
-                    <li class="lang_unselected"><a onClick="setLanguage('ja');" href="#">日本語</a></li>
+                    <li class="nav_selected">【English】</li>
+                    <li class="nav_unselected"><a onClick="setLanguage('ja');" href="#">日本語</a></li>
                 {% else %}
-                    <li class="lang_unselected"><a onClick="setLanguage('en');" href="#">English</a></li>
-                    <li class="lang_selected">【日本語】</li>
+                    <li class="nav_unselected"><a onClick="setLanguage('en');" href="#">English</a></li>
+                    <li class="nav_selected">【日本語】</li>
                 {% endif %}
                 </ul>
             </div>
@@ -77,7 +87,7 @@
                             <h3><a href="{{ page.url }}">{{ page.title }}</a></h3>
                             <p class="meta">{{ page.date_formatted }}</p>
                             <p class="excerpt">{{ page.excerpt }}</p>
-							<a href="{{ page.url }}">{{ continue_reading }} </a>
+                            <a href="{{ page.url }}">{{ continue_reading }} </a>
                         </div>
                         {% endif %}
                     {% endfor %}

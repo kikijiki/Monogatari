@@ -14,13 +14,13 @@ class Monogatari
     {
         $request_url = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
         $index_url  = (isset($_SERVER['PHP_SELF'])) ? $_SERVER['PHP_SELF'] : '';
-        
-        $this->setLanguage();
+
         $this->readSettings(ROOT_DIR . "settings.php");
+		$this->setLanguage();
         
         $file = null;
         $this->setupUrl($request_url, $index_url, $file);
-        $this->initializeCache();    
+        $use_cache = $this->initializeCache();    
 
         if($this->bindings['frontpage'])
         {
@@ -28,9 +28,12 @@ class Monogatari
         }
         else
         {
-            $result = $this->cache->getItem($this->getCacheKey($file), $success);
+			$cache_hit = false;
+			$out = 'error';
+			
+			if($use_cache) $out = $this->cache->getItem($this->getCacheKey($file), $cache_hit);
             
-            if($success) echo $result;
+            if($cache_hit) echo $out;
             else $this->renderPage($file);
         }
     }
@@ -70,28 +73,31 @@ class Monogatari
     {
         require_once($path);
         $this->settings = array_merge($this->settings, $settings);
-        $this->setBinding('lang', $this->settings['lang']);
-        $this->setBinding('site_title', $this->settings['site_title'][$this->settings['lang']]);
+        
         $this->setBinding('layout_url', $this->settings['base_url'].basename(LAYOUT_DIR).'/'.$this->settings['layout'].'/');
         $this->setBinding('base_dir', rtrim(ROOT_DIR, '/'));
         $this->setBinding('base_url', $this->settings['base_url']);
-		$this->setBinding('continue_reading', $this->settings['continue_reading'][$this->settings['lang']]);
 		$this->setBinding('analytics_ua', $this->settings['analytics_ua']);
     }
     
     private function initializeCache()
     {
+		$cache_options = $this->settings['cache_options'];
+		
+		if(!$cache_options)
+			return false;
+			
         $this->cache = StorageFactory::factory(array(
             'adapter' => array(
                 'name' => 'Filesystem',
-                'options' => array(
-                    'cache_dir' => ROOT_DIR.'cache'
-                    )
+                'options' => $cache_options
                 ),
             'plugins' => array(
                 'exception_handler' => array('throw_exceptions' => true),
             ),
         ));
+		
+		return true;
     }
     
     private function setupUrl($request_url, $index_url, &$file)
@@ -163,15 +169,18 @@ class Monogatari
     
     private function setLanguage()
     {
-        $lang = 'ja';
-        if(isset($_COOKIE['lang']))    $lang = $_COOKIE['lang'];
+		$languages = $this->settings['languages'];
+        $lang = $languages[1];
+        if(isset($_COOKIE['lang'])) $lang = $_COOKIE['lang'];
         else $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 
-        if($lang != 'ja') $lang = 'en';
+        if($lang != $languages[1]) $lang = $languages[0];
         setcookie('lang', $lang, time()+60*60*24*300, '/');
         
         $this->settings['lang'] = $lang;
         $this->setBinding('lang', $lang);
+		$this->setBinding('continue_reading', $this->settings['continue_reading'][$this->settings['lang']]);
+		$this->setBinding('site_title', $this->settings['site_title'][$this->settings['lang']]);
     }
     
     private function setBinding($key, $value)
@@ -182,7 +191,8 @@ class Monogatari
     private function getPages($base_dir)
     {
         $files = $this->getFiles($base_dir);
-        $pages = array();
+		$languages = $this->settings['languages'];
+		$pages = array();
         
         foreach($files as $key => $page)
         {
@@ -200,12 +210,12 @@ class Monogatari
             $url = str_replace(CONTENT_DIR, $this->settings['base_url'], $page);
 
             if($this->endsWith($url, 'index.md') ||
-               $this->endsWith($url, 'index.en.md') ||
-               $this->endsWith($url, 'index.ja.md'))
+               $this->endsWith($url, 'index.'.$languages[0].'.md') ||
+               $this->endsWith($url, 'index.'.$languages[1].'.md'))
                 continue;
                 
-            $url = str_replace('.ja.md', '', $url);
-            $url = str_replace('.en.md', '', $url);
+            $url = str_replace('.'.$languages[0].'.md', '', $url);
+            $url = str_replace('.'.$languages[1].'.md', '', $url);
             $url = str_replace('.md', '', $url);
 
             $date = '';
@@ -258,7 +268,8 @@ class Monogatari
             if(file_exists($path . $lang . '.md')){return array(($path . $lang . '.md'), $lang);}
             else
             {
-                $next_lang = $lang == 'ja' ? 'en' : 'ja';
+				$languages = $this->settings['languages'];
+                $next_lang = $lang == $languages[0] ? $languages[1] : $languages[0];
                 
                 if(file_exists($path . $next_lang . '.md'))
                 {

@@ -1,6 +1,6 @@
 <!---
-title = Section 0
-description = Section 0
+title = Diary
+description = Diary
 robots = 
-section_index = 1
+section_index = 0
 --!>
