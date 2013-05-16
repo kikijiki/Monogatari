@@ -79,6 +79,10 @@ Markdown is rendered in three passes:
 
 About the syntax, refer to the respective project documentation.
 
+### TODO
+* Integrate comments (using external services)
+* If code prettify is too slow, execute code highlight in php to let it cache the highlighted page.
+
 [php-markdown]: https://github.com/michelf/php-markdown
 [php-smartypants]: https://github.com/michelf/php-smartypants
 [prettify]: https://code.google.com/p/google-code-prettify/‎

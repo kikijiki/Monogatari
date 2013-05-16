@@ -1,5 +1,28 @@
 <?php
 
+//Copyright (c) 2013 Bernacchia Matteo <kikijikispaccaspecchi@gmail.com>
+//
+//Permission is hereby granted, free of charge, to any person
+//obtaining a copy of this software and associated documentation
+//files (the "Software"), to deal in the Software without
+//restriction, including without limitation the rights to use,
+//copy, modify, merge, publish, distribute, sublicense, and/or sell
+//copies of the Software, and to permit persons to whom the
+//Software is furnished to do so, subject to the following
+//conditions:
+//
+//The above copyright notice and this permission notice shall be
+//included in all copies or substantial portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//OTHER DEALINGS IN THE SOFTWARE.
+
 use \Michelf\MarkdownExtra;
 use Zend\Cache\StorageFactory;
 
@@ -15,7 +38,7 @@ class Monogatari
         $request_url = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
         $index_url  = (isset($_SERVER['PHP_SELF'])) ? $_SERVER['PHP_SELF'] : '';
 
-        $this->readSettings(ROOT_DIR . "settings.php");
+        $this->readSettings(ROOT_DIR . 'settings.php');
 		$this->setLanguage();
         
         $file = null;
@@ -54,7 +77,7 @@ class Monogatari
         $this->readArchive();
 
         Twig_Autoloader::register();
-        $loader = new Twig_Loader_Filesystem("layout/" . $this->settings['layout']);
+        $loader = new Twig_Loader_Filesystem('layout/' . $this->settings['layout']);
         $twig = new Twig_Environment($loader, $this->settings['twig_config']);
 
         $output = $twig->render('index.html', $this->bindings);
@@ -114,7 +137,7 @@ class Monogatari
         else $file = CONTENT_DIR.'index';
         
         if(is_dir($file)) $file = CONTENT_DIR.$url.'/index.md';
-        else $file .= ".md";
+        else $file .= '.md';
 
         $file = $this->getLocalizedPath($file)[0];
 
@@ -229,11 +252,11 @@ class Monogatari
                 if($this->settings['lang'] == 'ja')
                 {
                     $yo = array('日', '月', '火', '水', '木', '金', '土');;
-                    $date_formatted = date("Y年m月j日", $timestamp)." ".$yo[date("w", $timestamp)];
+                    $date_formatted = date('Y年m月j日', $timestamp).' '.$yo[date('w', $timestamp)];
                 }
                 else
                 {
-                    $date_formatted = date("Y/m/j D", strtotime($date));
+                    $date_formatted = date('Y/m/j D', strtotime($date));
                 }
             }
 
@@ -293,7 +316,7 @@ class Monogatari
             while($file = readdir($handle))
             {
                 $path = $base_dir.$file;
-                if($file != "." && $file != ".." && is_dir($path))
+                if($file != '.' && $file != '..' && is_dir($path))
                 {
                     list($index_path, $lang) = $this->getLocalizedPath($path.'/index.md');
                     $raw = file_get_contents($index_path);
@@ -325,16 +348,16 @@ class Monogatari
         {
             while($file = readdir($handle))
             {
-                if($file != "." && $file != "..")
+                if($file != '.' && $file != '..')
                 {
-                    if(is_dir($directory. "/" . $file))
+                    if(is_dir($directory. '/' . $file))
                     {
-                        $files = array_merge($files, $this->getFiles($directory. "/" . $file));
+                        $files = array_merge($files, $this->getFiles($directory. '/' . $file));
                     }
                     else
                     {
-                        $path = $directory . "/" . $file;
-                        if(strstr($path, ".md")) $files[] = $this->getLocalizedPath(preg_replace("/\/\//si", "/", $path))[0];
+                        $path = $directory . '/' . $file;
+                        if(strstr($path, '.md')) $files[] = $this->getLocalizedPath(preg_replace('/\/\//si', '/', $path))[0];
                     }
                 }
             }
@@ -349,14 +372,14 @@ class Monogatari
         if(isset($metadata['excerpt']))
         {
             $length = $metadata['excerpt'];
-            $line = strtok($content, "\r\n");
+            $line = strtok($content, PHP_EOL);
             $excerpt = array();
             
             while($line !== false && $length > 0)
             {
-                $excerpt[] = $line . "\r\n";
+                $excerpt[] = $line . PHP_EOL;
                 $length = $length-1;
-                $line = strtok("\r\n");
+                $line = strtok(PHP_EOL);
             }
             
             return implode($excerpt);
