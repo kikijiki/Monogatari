@@ -73,9 +73,10 @@ Look at the default theme's index.html for sample usage.
 
 ### Markdown
 Markdown is rendered in three passes:
-1. (MarkdownExtra)[php-markdown]
-2. (SmartyPants)[php-smartypants]
-3. (Prettify)[prettify] (client-side)
+
+1. [MarkdownExtra][php-markdown]
+2. [SmartyPants][php-smartypants]
+3. [Prettify][prettify] (client-side)
 
 About the syntax, refer to the respective project documentation.
 Note: you can use html, and can also include markdown inside html tags if you specify the `markdown="1"` attribute.
