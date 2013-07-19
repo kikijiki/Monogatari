@@ -3,6 +3,9 @@ MONOGATARI
 
 ###Markdown-based blog
 
+Since I was getting tired of using wordpress I decided to try to roll the code myself.
+This project is inspired by [pico].
+
 ## Characteristics
 * Extended markdown syntax ([php-markdown], [php-smartypants]).
 * Syntax highliting ([prettify]).
@@ -83,10 +86,10 @@ Note: you can use html, and can also include markdown inside html tags if you sp
 
 ### TODO
 * Integrate comments (using external services)
-* If code prettify is too slow, execute code highlight in php to let it cache the highlighted page.
 
 [php-markdown]: https://github.com/michelf/php-markdown
 [php-smartypants]: https://github.com/michelf/php-smartypants
 [prettify]: https://code.google.com/p/google-code-prettify/‎
 [zf2]: https://github.com/zendframework/zf2
 [twig]: https://github.com/fabpot/Twig
+[pico]: https://github.com/gilbitron/Pico
