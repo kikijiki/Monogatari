@@ -85,7 +85,7 @@ About the syntax, refer to the respective project documentation.
 Note: you can use html, and can also include markdown inside html tags if you specify the `markdown="1"` attribute.
 
 ### TODO
-* Integrate comments (using external services)
+* Integrate comments (using external services).
 
 [php-markdown]: https://github.com/michelf/php-markdown
 [php-smartypants]: https://github.com/michelf/php-smartypants
